@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "product": "製品紹介",
+    "links": "リンク",
+    "contact": "お問い合わせ",
+    "founder": "創設者",
+    "partners": "パートナー"
+  },
+  "home": {
+    "hero": {
+      "tagline": "「モデル優先」から「ワールドモデル優先」へ",
+      "subtitle": "AI市場分析のための暗号資産データワールドモデルインフラストラクチャ",
+      "cta": "詳細を見る"
+    },
+    "overview": {
+      "title": "核心命題",
+      "content": "多くのAI取引システムが失敗するのは、モデルが十分に賢くないからではなく、モデルに与えられる市場の世界観が薄すぎるからです。evo quantはAIに代わって取引するのではなく、まず現実の市場を十分に広く、安定し、誠実な世界モデルにコンパイルします。"
+    },
+    "evidence": {
+      "title": "8つの証拠バンド"
+    }
+  },
+  "product": {
+    "title": "製品紹介",
+    "architecture": "システムアーキテクチャ",
+    "modules": "モジュール式観測システム",
+    "quality": "品質ガバナンス",
+    "specs": "技術仕様"
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "form": {
+      "name": "お名前",
+      "email": "メールアドレス",
+      "company": "会社名",
+      "message": "メッセージ",
+      "submit": "送信",
+      "sending": "送信中...",
+      "success": "メッセージが送信されました。お問い合わせありがとうございます！",
+      "error": "送信に失敗しました。後でもう一度お試しください。"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 evo quant. All rights reserved."
+  },
+  "language": "言語",
+  "theme": {
+    "dark": "ダークモード",
+    "light": "ライトモード"
+  }
+}

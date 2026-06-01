@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "首页",
+    "product": "产品介绍",
+    "links": "友情链接",
+    "contact": "联系我们",
+    "founder": "创始人简介",
+    "partners": "合作伙伴"
+  },
+  "home": {
+    "hero": {
+      "tagline": "从\"模型优先\"到\"世界模型优先\"",
+      "subtitle": "面向AI市场分析的加密货币数据世界模型基础设施",
+      "cta": "了解更多"
+    },
+    "overview": {
+      "title": "核心命题",
+      "content": "多数AI交易系统失败，并非因为模型不够聪明，而是因为喂给模型的市场世界观过于单薄。evo quant 不直接替AI下单，而是先把真实市场编译成一个够宽、够稳、够诚实的世界模型。"
+    },
+    "evidence": {
+      "title": "八大证据带"
+    }
+  },
+  "product": {
+    "title": "产品介绍",
+    "architecture": "系统架构",
+    "modules": "模块化观测系统",
+    "quality": "质量治理",
+    "specs": "技术规格"
+  },
+  "contact": {
+    "title": "联系我们",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "company": "公司",
+      "message": "留言",
+      "submit": "发送",
+      "sending": "发送中...",
+      "success": "消息已发送，感谢您的联系！",
+      "error": "发送失败，请稍后重试。"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 evo quant. 保留所有权利。"
+  },
+  "language": "English",
+  "theme": {
+    "dark": "暗色模式",
+    "light": "亮色模式"
+  }
+}

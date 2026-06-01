@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "product": "Product",
+    "links": "Links",
+    "contact": "Contact",
+    "founder": "Founder",
+    "partners": "Partners"
+  },
+  "home": {
+    "hero": {
+      "tagline": "From \"Model-First\" to \"World-Model-First\"",
+      "subtitle": "Cryptocurrency Data World Model Infrastructure for AI-Based Market Analysis",
+      "cta": "Learn More"
+    },
+    "overview": {
+      "title": "Core Thesis",
+      "content": "Most AI trading systems fail not because the model is not smart enough, but because the market worldview fed into the model is too thin. evo quant does not trade for AI — it first compiles the real market into a broad, stable, and honest world model."
+    },
+    "evidence": {
+      "title": "8 Evidence Bands"
+    }
+  },
+  "product": {
+    "title": "Product",
+    "architecture": "System Architecture",
+    "modules": "Modular Observation System",
+    "quality": "Quality Governance",
+    "specs": "Technical Specifications"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "message": "Message",
+      "submit": "Send",
+      "sending": "Sending...",
+      "success": "Message sent. Thank you for reaching out!",
+      "error": "Failed to send. Please try again later."
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 evo quant. All rights reserved."
+  },
+  "language": "中文",
+  "theme": {
+    "dark": "Dark Mode",
+    "light": "Light Mode"
+  }
+}
