@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "product": "Product",
+    "download": "Downloads",
     "links": "Links",
     "contact": "Contact",
     "founder": "Founder",
@@ -15,7 +16,25 @@
     },
     "overview": {
       "title": "Core Thesis",
-      "content": "Most AI trading systems fail not because the model is not smart enough, but because the market worldview fed into the model is too thin. evo quant does not trade for AI — it first compiles the real market into a broad, stable, and honest world model."
+      "content": "Most AI trading systems fail not because the model is not smart enough, but because the market worldview fed into the model is too thin — relying solely on price series and technical indicators as shallow representations misses the deep structure and multi-dimensional signals of the market.\n\nEvo-Quant does not directly use AI to place orders. We first compile the real market into a broad, stable, and honest world model. Through systematic data acquisition across eight evidence bands and a three-layer quality governance framework, we progressively transform high-dimensional, non-linear latent market states into structured intelligence consumable by AI.\n\nThis is not another trading strategy — it is the market cognition layer infrastructure for AI decision systems."
+    },
+    "framework": {
+      "title": "From Latent Market State to AI-Visible World",
+      "subtitle": "Blockchain World Visual Model",
+      "description": "The real market exists as a latent state — a high-dimensional, non-linear, partially observable dynamic system. Through data representation and feature encoding, we map it to an observable world. Then via AI semantic compression and world-model encoding, it becomes an AI-visible world: a market cognitive layer for AI decision systems.",
+      "pillar1_title": "Latent Market State",
+      "pillar1_desc": "High-dimensional, non-linear, partially observable dynamic system",
+      "pillar2_title": "Observable World",
+      "pillar2_desc": "Data representation & feature encoding",
+      "pillar3_title": "AI-Visible World",
+      "pillar3_desc": "Semantic compression & world-model encoding",
+      "pillar4_title": "Market Cognitive Layer",
+      "pillar4_desc": "Structured intelligence for AI decision systems",
+      "vision_title": "Treating Complexity as a Vision Problem",
+      "vision_1": "Market microstructure imaging",
+      "vision_2": "On-chain data visualization",
+      "vision_3": "Cross-exchange order book imaging",
+      "vision_4": "Multi-dimensional feature fusion"
     },
     "evidence": {
       "title": "8 Evidence Bands"
@@ -27,6 +46,14 @@
     "modules": "Modular Observation System",
     "quality": "Quality Governance",
     "specs": "Technical Specifications"
+  },
+  "download": {
+    "title": "Downloads",
+    "subtitle": "Product documentation & whitepapers",
+    "whitepaper": "Product Whitepaper",
+    "whitepaper_desc": "EvoQuant world model infrastructure overview — from latent market state to AI-visible world",
+    "size": "Size",
+    "download_btn": "Download PDF"
   },
   "contact": {
     "title": "Contact Us",

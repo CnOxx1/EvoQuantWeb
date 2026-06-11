@@ -20,13 +20,13 @@ router.get('/:slug', (req, res) => {
 });
 
 router.put('/:slug', auth, (req, res) => {
-  const { title_zh, title_en, meta_description_zh, meta_description_en } = req.body;
+  const { title_zh, title_en, title_ja, meta_description_zh, meta_description_en, meta_description_ja } = req.body;
   const existing = db.get('SELECT id FROM pages WHERE slug = ?', [req.params.slug]);
   if (!existing) return res.status(404).json({ error: 'Page not found' });
 
   db.run(
-    `UPDATE pages SET title_zh = ?, title_en = ?, meta_description_zh = ?, meta_description_en = ?, updated_at = datetime('now') WHERE slug = ?`,
-    [title_zh || '', title_en || '', meta_description_zh || '', meta_description_en || '', req.params.slug]
+    `UPDATE pages SET title_zh = ?, title_en = ?, title_ja = ?, meta_description_zh = ?, meta_description_en = ?, meta_description_ja = ?, updated_at = datetime('now') WHERE slug = ?`,
+    [title_zh || '', title_en || '', title_ja || '', meta_description_zh || '', meta_description_en || '', meta_description_ja || '', req.params.slug]
   );
   res.json({ success: true });
 });

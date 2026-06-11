@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePageContent } from '../hooks/usePageContent';
-import { getFounders, getPartners, submitContact } from '../api/endpoints';
+import { submitContact } from '../api/endpoints';
 import ContentBlock from '../components/common/ContentBlock';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ScrollReveal from '../components/common/ScrollReveal';
@@ -11,25 +11,25 @@ import AnimatedCounter from '../components/common/AnimatedCounter';
 // Data
 // ---------------------------------------------------------------------------
 const evidenceBands = [
-  { key: 'microstructure', zh: '市场微观结构', en: 'Market Microstructure', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-  { key: 'derivatives', zh: '衍生品拥挤度', en: 'Derivatives Structure', icon: 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z' },
-  { key: 'cross_exchange', zh: '跨交易所执行', en: 'Cross-Exchange Execution', icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
-  { key: 'onchain', zh: '链上资本流', en: 'On-Chain Capital Flow', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
-  { key: 'tokenomics', zh: '供给压力', en: 'Tokenomics Supply Pressure', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
-  { key: 'macro', zh: '宏观背景', en: 'Macro Regime', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064' },
-  { key: 'news', zh: '新闻与事件', en: 'News & Events', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z' },
-  { key: 'attention', zh: '注意力与开发者活跃度', en: 'Attention & Builder Activity', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z' },
+  { key: 'microstructure', zh: '市場微觀結構', ja: '市場微細構造', en: 'Market Microstructure', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+  { key: 'derivatives', zh: '衍生品擁擠度', ja: 'デリバティブ構造', en: 'Derivatives Structure', icon: 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z' },
+  { key: 'cross_exchange', zh: '跨交易所執行', ja: 'クロス取引所執行', en: 'Cross-Exchange Execution', icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
+  { key: 'onchain', zh: '鏈上資本流', ja: 'オンチェーン資本フロー', en: 'On-Chain Capital Flow', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+  { key: 'tokenomics', zh: '供給壓力', ja: 'トークノミクス供給圧力', en: 'Tokenomics Supply Pressure', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
+  { key: 'macro', zh: '宏觀背景', ja: 'マクロレジーム', en: 'Macro Regime', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064' },
+  { key: 'news', zh: '新聞與事件', ja: 'ニュース＆イベント', en: 'News & Events', icon: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z' },
+  { key: 'attention', zh: '注意力與開發者活躍度', ja: 'アテンション＆開発者活動', en: 'Attention & Builder Activity', icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z' },
 ];
 
 const statCards = [
-  { zh: 'SQLite 应用表', en: 'SQLite Tables', value: '42' },
-  { zh: '技术指标列', en: 'Indicator Columns', value: '181' },
-  { zh: '市场上下文列', en: 'Context Columns', value: '21' },
-  { zh: '跨所执行列', en: 'Exchange Columns', value: '90' },
-  { zh: '宏观因子', en: 'Macro Factors', value: '15' },
-  { zh: '链上因子', en: 'On-Chain Factors', value: '17' },
-  { zh: '期权因子', en: 'Options Factors', value: '55' },
-  { zh: '替代因子', en: 'Alt. Factors', value: '28' },
+  { zh: 'SQLite 應用表', ja: 'SQLiteテーブル', en: 'SQLite Tables', value: '42' },
+  { zh: '技術指標列', ja: 'テクニカル指標列', en: 'Indicator Columns', value: '181' },
+  { zh: '市場上下文列', ja: '市場コンテキスト列', en: 'Context Columns', value: '21' },
+  { zh: '跨所執行列', ja: '取引所実行列', en: 'Exchange Columns', value: '90' },
+  { zh: '宏觀因子', ja: 'マクロ因子', en: 'Macro Factors', value: '15' },
+  { zh: '鏈上因子', ja: 'オンチェーン因子', en: 'On-Chain Factors', value: '17' },
+  { zh: '期權因子', ja: 'オプション因子', en: 'Options Factors', value: '55' },
+  { zh: '替代因子', ja: '代替因子', en: 'Alt. Factors', value: '28' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -63,6 +63,107 @@ function FloatingParticles() {
 }
 
 // ---------------------------------------------------------------------------
+// Theoretical Framework — 从潜在市场状态到AI可见世界
+// ---------------------------------------------------------------------------
+function FrameworkSection() {
+  const { t } = useTranslation();
+
+  const pillars = ['pillar1', 'pillar2', 'pillar3', 'pillar4'];
+
+  const visionItems = [
+    { key: 'vision_1', icon: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 2a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1v-2z' },
+    { key: 'vision_2', icon: 'M7 3a1 1 0 000 2h10a1 1 0 100-2H7zM4 7a1 1 0 011-1h14a1 1 0 110 2H5a1 1 0 01-1-1zm1 4a1 1 0 100 2h14a1 1 0 100-2H5zm-1 5a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1zm9 0a1 1 0 011-1h4a1 1 0 110 2h-4a1 1 0 01-1-1z' },
+    { key: 'vision_3', icon: 'M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2' },
+    { key: 'vision_4', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10-2a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z' },
+  ];
+
+  return (
+    <section className="relative py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-color)] overflow-hidden">
+      <FloatingParticles />
+
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)]/50 to-[var(--bg-primary)]" />
+
+      <div className="relative max-w-6xl mx-auto">
+        {/* Section header */}
+        <ScrollReveal>
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-3 tracking-tight">
+            {t('home.framework.title')}
+          </h2>
+          <p className="text-center text-[var(--text-muted)] text-sm mb-6">
+            {t('home.framework.subtitle')}
+          </p>
+          <p className="text-center text-[var(--text-secondary)] text-base max-w-3xl mx-auto mb-16 leading-relaxed">
+            {t('home.framework.description')}
+          </p>
+        </ScrollReveal>
+
+        {/* Pipeline flow */}
+        <div className="relative mb-20">
+          {/* Connecting line removed */}
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-3">
+            {pillars.map((key, idx) => (
+              <ScrollReveal key={key} delay={idx * 150}>
+                <div className="group relative p-6 md:p-8 text-center border border-[var(--border-color)] hover:border-[var(--text-muted)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                  {/* Step number */}
+                  <div className="w-10 h-10 mx-auto mb-4 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover:border-[var(--text-muted)] transition-colors duration-300">
+                    <span className="text-sm font-light text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors duration-300">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  {/* Arrow for mobile */}
+                  {idx < 3 && (
+                    <div className="md:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 text-[var(--text-muted)]">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </div>
+                  )}
+                  <h3 className="text-lg font-bold mb-2 text-[var(--text-primary)] group-hover:tracking-wide transition-all">
+                    {t(`home.framework.${key}_title`)}
+                  </h3>
+                  <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                    {t(`home.framework.${key}_desc`)}
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Vision model sub-section */}
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">
+              {t('home.framework.vision_title')}
+            </h3>
+            <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[var(--text-muted)] to-transparent mx-auto" />
+          </div>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {visionItems.map((item, idx) => (
+            <ScrollReveal key={item.key} delay={idx * 120}>
+              <div className="group flex flex-col items-center text-center p-6 border border-[var(--border-color)] hover:border-[var(--text-muted)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 mb-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors duration-500">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium text-[var(--text-primary)] group-hover:tracking-wide transition-all">
+                  {t(`home.framework.${item.key}`)}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Section Divider (geometric wave)
 // ---------------------------------------------------------------------------
 function SectionDivider() {
@@ -80,7 +181,7 @@ function SectionDivider() {
 // Hero section with parallax background
 // ---------------------------------------------------------------------------
 function HeroSection({ heroSection }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const containerRef = useRef(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -117,10 +218,11 @@ function HeroSection({ heroSection }) {
       }} />
 
       <div className="relative z-10 text-center max-w-4xl mx-auto">
-        {heroSection ? (
+        {heroSection && i18n.language !== 'ja' ? (
           <ContentBlock
             contentZh={heroSection.content_zh}
             contentEn={heroSection.content_en}
+            contentJa={heroSection.content_ja}
             className="text-white [&_h1]:mb-3 [&_p]:mt-0 [&_p]:text-lg [&_p]:md:text-xl"
           />
         ) : (
@@ -148,6 +250,61 @@ function HeroSection({ heroSection }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Download section
+// ---------------------------------------------------------------------------
+function DownloadSection() {
+  const { t } = useTranslation();
+
+  return (
+    <section id="download" className="relative py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-color)] overflow-hidden">
+      <FloatingParticles />
+      <div className="relative max-w-4xl mx-auto">
+        <ScrollReveal>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{t('download.title')}</h2>
+          <p className="text-center text-[var(--text-muted)] text-sm mb-16">
+            {t('download.subtitle')}
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal delay={100}>
+          <a
+            href="/main_cn_core.pdf"
+            download
+            className="group flex items-center gap-6 p-6 sm:p-8 border border-[var(--border-color)] hover:border-[var(--text-muted)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+          >
+            {/* Logo */}
+            <div className="flex-shrink-0 w-16 h-16 rounded-full overflow-hidden border-2 border-[var(--border-color)] group-hover:border-[var(--text-muted)] transition-all duration-500">
+              <img src="/logo.png" alt="Logo" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base font-bold text-[var(--text-primary)] group-hover:tracking-wide transition-all mb-1">
+                {t('download.whitepaper')}
+              </h3>
+              <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-2">
+                {t('download.whitepaper_desc')}
+              </p>
+              <span className="text-xs text-[var(--text-muted)]">
+                PDF · 597 KB
+              </span>
+            </div>
+
+            {/* Download button */}
+            <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border border-[var(--text-primary)] text-[var(--text-primary)] group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)] transition-all duration-300 text-xs tracking-widest uppercase">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              {t('download.download_btn')}
+            </div>
+          </a>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -183,7 +340,7 @@ function ContactSection() {
         <ScrollReveal>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{t('contact.title')}</h2>
           <p className="text-center text-[var(--text-muted)] text-sm mb-12">
-            {i18n.language === 'zh' ? '如有任何问题或合作意向，欢迎联系我们' : 'For any questions or collaboration inquiries, feel free to reach out'}
+            {i18n.language === 'zh' ? '如有任何問題或合作意向，歡迎聯繫我們' : 'For any questions or collaboration inquiries, feel free to reach out'}
           </p>
         </ScrollReveal>
 
@@ -200,7 +357,7 @@ function ContactSection() {
                 onClick={() => setStatus('idle')}
                 className="mt-6 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] underline underline-offset-4 transition-colors"
               >
-                {i18n.language === 'zh' ? '发送另一条消息' : 'Send another message'}
+                {i18n.language === 'zh' ? '發送另一條消息' : 'Send another message'}
               </button>
             </div>
           </ScrollReveal>
@@ -281,14 +438,6 @@ export default function MainPage() {
   const { t, i18n } = useTranslation();
   const { data: homePage, loading: homeLoading } = usePageContent('home');
   const { data: productPage, loading: prodLoading } = usePageContent('product');
-  const [founders, setFounders] = useState([]);
-  const [partners, setPartners] = useState([]);
-
-  useEffect(() => {
-    getFounders().then(r => setFounders(r.data)).catch(() => {});
-    getPartners().then(r => setPartners(r.data)).catch(() => {});
-  }, []);
-
   if (homeLoading || prodLoading) return <LoadingSpinner />;
 
   const heroSection = homePage?.sections?.find(s => s.section_key === 'hero');
@@ -302,16 +451,24 @@ export default function MainPage() {
       {/* ================================================================= */}
       <HeroSection heroSection={heroSection} />
 
+      {/* Theoretical Framework */}
+      <FrameworkSection />
+
       {/* Overview */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto overflow-hidden">
         <FloatingParticles />
         <ScrollReveal>
           {overviewSection ? (
-            <ContentBlock contentZh={overviewSection.content_zh} contentEn={overviewSection.content_en} />
+            <ContentBlock
+              contentZh={overviewSection.content_zh}
+              contentEn={overviewSection.content_en}
+              contentJa={overviewSection.content_ja}
+              className="max-w-3xl mx-auto text-center [&_h2]:text-3xl [&_h2]:md:text-4xl [&_h2]:font-bold [&_h2]:mb-8 [&_p]:text-base [&_p]:md:text-lg [&_p]:text-[var(--text-secondary)] [&_p]:leading-relaxed [&_p]:mb-5"
+            />
           ) : (
             <>
               <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">{t('home.overview.title')}</h2>
-              <p className="text-lg text-[var(--text-secondary)] leading-relaxed text-center max-w-3xl mx-auto">
+              <p className="text-lg text-[var(--text-secondary)] leading-relaxed text-center max-w-3xl mx-auto whitespace-pre-line">
                 {t('home.overview.content')}
               </p>
             </>
@@ -329,7 +486,7 @@ export default function MainPage() {
         <ScrollReveal>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{t('home.evidence.title')}</h2>
           <p className="text-center text-[var(--text-muted)] text-sm mb-16 max-w-xl mx-auto">
-            {i18n.language === 'zh' ? '多维数据观测体系，构建完整的市场世界观' : 'Multi-dimensional observation system for a complete market worldview'}
+            {i18n.language === 'zh' ? '多維數據觀測體系，構建完整的市場世界觀' : i18n.language === 'ja' ? '多次元観測システムによる完全な市場世界観の構築' : 'Multi-dimensional observation system for a complete market worldview'}
           </p>
         </ScrollReveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
@@ -346,7 +503,7 @@ export default function MainPage() {
                   {String(idx + 1).padStart(2, '0')}
                 </span>
                 <h3 className="mt-4 text-sm font-medium text-[var(--text-primary)] group-hover:translate-x-1 transition-transform duration-300">
-                  {i18n.language === 'zh' ? band.zh : band.en}
+                  {i18n.language === 'zh' ? band.zh : i18n.language === 'ja' ? band.ja : band.en}
                 </h3>
                 {/* Hover accent bar */}
                 <div className="absolute bottom-0 left-0 h-0.5 bg-[var(--text-primary)] w-0 group-hover:w-full transition-all duration-500" />
@@ -366,15 +523,17 @@ export default function MainPage() {
           <ScrollReveal>
             {(() => {
               const headerSection = productSections.find(s => s.section_key === 'product_header');
-              if (headerSection) {
-                return <ContentBlock contentZh={headerSection.content_zh} contentEn={headerSection.content_en} className="text-black [&_h2]:text-4xl [&_h2]:md:text-5xl [&_h2]:font-bold [&_h2]:mb-4 [&_p]:text-gray-600 [&_p]:max-w-2xl [&_p]:mx-auto [&_p]:text-lg" />;
+              if (headerSection && i18n.language !== 'ja') {
+                return <ContentBlock contentZh={headerSection.content_zh} contentEn={headerSection.content_en} contentJa={headerSection.content_ja} className="text-black [&_h2]:text-4xl [&_h2]:md:text-5xl [&_h2]:font-bold [&_h2]:mb-4 [&_p]:text-gray-600 [&_p]:max-w-2xl [&_p]:mx-auto [&_p]:text-lg" />;
               }
               return (
                 <>
                   <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">{t('product.title')}</h2>
                   <p className="text-gray-600 max-w-2xl mx-auto text-lg">
                     {i18n.language === 'zh'
-                      ? '一个面向AI的加密市场数据世界模型基础设施'
+                      ? '一個面向AI的加密市場數據世界模型基礎設施'
+                      : i18n.language === 'ja'
+                      ? 'AI市場分析のための暗号資産データ・ワールドモデル基盤'
                       : 'A cryptocurrency data world model infrastructure for AI-based market analysis'}
                   </p>
                 </>
@@ -387,7 +546,7 @@ export default function MainPage() {
           <section key={section.section_key}
             className={`py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto border-b border-gray-200 last:border-b-0 ${idx % 2 === 0 ? '' : 'bg-gray-50'}`}>
             <ScrollReveal>
-              <ContentBlock contentZh={section.content_zh} contentEn={section.content_en} className="text-black [&_h2]:text-black [&_h3]:text-black [&_p]:text-gray-700 [&_ul]:text-gray-700" />
+              <ContentBlock contentZh={section.content_zh} contentEn={section.content_en} contentJa={section.content_ja} className="text-black [&_h2]:text-black [&_h3]:text-black [&_p]:text-gray-700 [&_ul]:text-gray-700" />
             </ScrollReveal>
           </section>
         ))}
@@ -396,10 +555,10 @@ export default function MainPage() {
         <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gray-50">
           <ScrollReveal>
             <h3 className="text-2xl md:text-3xl font-bold text-black text-center mb-4">
-              {i18n.language === 'zh' ? '技术规模一览' : 'Technical Scale at a Glance'}
+              {i18n.language === 'zh' ? '技術規模一覽' : i18n.language === 'ja' ? '技術規模概要' : 'Technical Scale at a Glance'}
             </h3>
             <p className="text-gray-500 text-center text-sm mb-16 max-w-xl mx-auto">
-              {i18n.language === 'zh' ? '覆盖多维度的数据基础设施' : 'Multi-dimensional data infrastructure coverage'}
+              {i18n.language === 'zh' ? '覆蓋多維度的數據基礎設施' : i18n.language === 'ja' ? '多角的なデータインフラストラクチャのカバレッジ' : 'Multi-dimensional data infrastructure coverage'}
             </p>
           </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -410,7 +569,7 @@ export default function MainPage() {
                     <AnimatedCounter value={stat.value} />
                   </div>
                   <div className="text-xs text-gray-500 tracking-wide group-hover:text-black transition-colors">
-                    {i18n.language === 'zh' ? stat.zh : stat.en}
+                    {i18n.language === 'zh' ? stat.zh : i18n.language === 'ja' ? stat.ja : stat.en}
                   </div>
                   {/* Corner accent */}
                   <div className="absolute top-0 right-0 w-0 h-0 border-t-[16px] border-r-[16px] border-t-gray-100 border-r-transparent group-hover:border-t-black transition-colors duration-300" />
@@ -422,130 +581,12 @@ export default function MainPage() {
       </section>
 
       {/* ================================================================= */}
-      {/* SECTION 3 — FOUNDER                                               */}
+      {/* SECTION 3 — DOWNLOAD                                              */}
       {/* ================================================================= */}
-      <section id="founder" className="relative py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-color)] overflow-hidden">
-        <FloatingParticles />
-        <ScrollReveal>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">{t('nav.founder')}</h2>
-          <div className="w-16 h-1 bg-[var(--border-color)] mx-auto mt-6 mb-16" />
-        </ScrollReveal>
-        <div className="max-w-7xl mx-auto">
-          {founders.length === 0 ? (
-            <p className="text-center text-[var(--text-muted)] py-12">
-              {i18n.language === 'zh' ? '暂无创始人信息' : 'No founder information yet'}
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-              {founders.map((founder, idx) => {
-                const socialLinks = typeof founder.social_links === 'string'
-                  ? JSON.parse(founder.social_links || '{}')
-                  : (founder.social_links || {});
-                return (
-                  <ScrollReveal key={founder.id} delay={idx * 100}>
-                    <div className="group flex flex-col items-center text-center p-6 border border-[var(--border-color)] hover:border-[var(--text-muted)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                      {/* Avatar */}
-                      <div className="relative mb-5">
-                        <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-[var(--border-color)] bg-[var(--bg-secondary)] group-hover:border-[var(--text-muted)] transition-all duration-500 mx-auto">
-                          {founder.photo_url ? (
-                            <img src={founder.photo_url} alt={i18n.language === 'zh' ? founder.name_zh : founder.name_en} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-[var(--text-muted)] text-xs">Photo</div>
-                          )}
-                        </div>
-                        {/* Decorative ring */}
-                        <div className="absolute -inset-1.5 rounded-full border border-dashed border-[var(--border-color)] opacity-0 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-700" />
-                      </div>
-                      {/* Info */}
-                      <h3 className="text-base font-bold mb-1 group-hover:tracking-wide transition-all">
-                        {i18n.language === 'zh' ? founder.name_zh : founder.name_en}
-                      </h3>
-                      <p className="text-[var(--text-muted)] text-xs tracking-wide mb-3">
-                        {i18n.language === 'zh' ? founder.title_zh : founder.title_en}
-                      </p>
-                      <p className="text-[var(--text-secondary)] text-xs leading-relaxed mb-3 line-clamp-3">
-                        {i18n.language === 'zh' ? founder.bio_zh : founder.bio_en}
-                      </p>
-                      {/* Social & email */}
-                      <div className="mt-auto flex items-center gap-2 flex-wrap justify-center">
-                        {founder.email && (
-                          <a href={`mailto:${founder.email}`}
-                            className="w-7 h-7 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-all duration-300 hover:-translate-y-0.5">
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                          </a>
-                        )}
-                        {Object.entries(socialLinks).map(([key, url]) => (
-                          <a key={key} href={url} target="_blank" rel="noopener noreferrer"
-                            className="w-7 h-7 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-all duration-300 hover:-translate-y-0.5">
-                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                            </svg>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
+      <DownloadSection />
 
       {/* ================================================================= */}
-      {/* SECTION 4 — PARTNERS                                              */}
-      {/* ================================================================= */}
-      <section id="partners" className="relative py-24 px-4 sm:px-6 lg:px-8 border-t border-[var(--border-color)] overflow-hidden bg-[var(--bg-secondary)]">
-        <FloatingParticles />
-        <ScrollReveal>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">{t('nav.partners')}</h2>
-          <div className="w-16 h-1 bg-[var(--border-color)] mx-auto mt-6 mb-16" />
-        </ScrollReveal>
-        <div className="max-w-6xl mx-auto">
-          {partners.length === 0 ? (
-            <p className="text-center text-[var(--text-muted)] py-12">
-              {i18n.language === 'zh' ? '暂无合作伙伴' : 'No partners yet'}
-            </p>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {partners.map((partner, idx) => (
-                <ScrollReveal key={partner.id} delay={idx * 100}>
-                  <div className="group flex flex-col items-center text-center p-6 bg-[var(--bg-primary)] border border-[var(--border-color)] hover:border-[var(--text-muted)] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    {partner.logo_url ? (
-                      <img src={partner.logo_url} alt={i18n.language === 'zh' ? partner.name_zh : partner.name_en}
-                        className="h-16 object-contain mb-4 grayscale group-hover:grayscale-0 transition-all duration-500" />
-                    ) : (
-                      <div className="w-16 h-16 rounded-lg border-2 border-dashed border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] text-xs mb-4 group-hover:border-solid group-hover:border-[var(--text-muted)] transition-all">
-                        Logo
-                      </div>
-                    )}
-                    <h3 className="text-sm font-medium text-[var(--text-primary)] mb-1 group-hover:text-black dark:group-hover:text-white transition-colors">
-                      {i18n.language === 'zh' ? partner.name_zh : partner.name_en}
-                    </h3>
-                    <p className="text-xs text-[var(--text-muted)]">
-                      {i18n.language === 'zh' ? partner.description_zh : partner.description_en}
-                    </p>
-                    {partner.url && (
-                      <a href={partner.url} target="_blank" rel="noopener noreferrer"
-                        className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors group/link">
-                        {i18n.language === 'zh' ? '访问网站' : 'Visit'}
-                        <svg className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ================================================================= */}
-      {/* SECTION 5 — CONTACT                                               */}
+      {/* SECTION 4 — CONTACT                                               */}
       {/* ================================================================= */}
       <ContactSection />
     </div>

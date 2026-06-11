@@ -46,10 +46,13 @@ const linkValidation = [
 const founderValidation = [
   body('name_zh').trim().escape().isLength({ min: 1, max: 100 }),
   body('name_en').trim().escape().isLength({ min: 1, max: 100 }),
+  body('name_ja').optional().trim().escape(),
   body('title_zh').trim().escape().isLength({ min: 1, max: 200 }),
   body('title_en').trim().escape().isLength({ min: 1, max: 200 }),
+  body('title_ja').optional().trim().escape(),
   body('bio_zh').optional().isString(),
   body('bio_en').optional().isString(),
+  body('bio_ja').optional().isString(),
   body('photo_url').optional().trim().isString(),
   body('email').optional({ values: 'falsy' }).trim().isEmail().normalizeEmail(),
   body('social_links').optional().isString(),
@@ -60,10 +63,12 @@ const founderValidation = [
 const partnerValidation = [
   body('name_zh').trim().escape().isLength({ min: 1, max: 200 }),
   body('name_en').trim().escape().isLength({ min: 1, max: 200 }),
+  body('name_ja').optional().trim().escape(),
   body('logo_url').optional().trim().isString(),
   body('url').optional({ values: 'falsy' }).trim().isURL(),
   body('description_zh').optional().trim().escape(),
   body('description_en').optional().trim().escape(),
+  body('description_ja').optional().trim().escape(),
   body('is_active').optional().isInt({ min: 0, max: 1 }),
   handleValidation,
 ];

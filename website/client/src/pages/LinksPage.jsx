@@ -34,7 +34,7 @@ export default function LinksPage() {
           <LoadingSpinner />
         ) : Object.keys(categories).length === 0 ? (
           <p className="text-center text-[var(--text-muted)] py-12">
-            {i18n.language === 'zh' ? '暂无链接' : 'No links yet'}
+            {i18n.language === 'zh' ? '暫無連結' : 'No links yet'}
           </p>
         ) : (
           Object.entries(categories).map(([cat, catLinks]) => (

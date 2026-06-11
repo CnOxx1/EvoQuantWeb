@@ -4,13 +4,13 @@ import ContentBlock from '../components/common/ContentBlock';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const statCards = [
-  { zh: 'SQLite 应用表', en: 'SQLite Tables', value: '42' },
-  { zh: '技术指标列', en: 'Indicator Columns', value: '181' },
-  { zh: '市场上下文列', en: 'Context Columns', value: '21' },
-  { zh: '跨所执行列', en: 'Exchange Columns', value: '90' },
-  { zh: '宏观因子', en: 'Macro Factors', value: '15' },
-  { zh: '链上因子', en: 'On-Chain Factors', value: '17' },
-  { zh: '期权因子', en: 'Options Factors', value: '55' },
+  { zh: 'SQLite 應用表', en: 'SQLite Tables', value: '42' },
+  { zh: '技術指標列', en: 'Indicator Columns', value: '181' },
+  { zh: '市場上下文列', en: 'Context Columns', value: '21' },
+  { zh: '跨所執行列', en: 'Exchange Columns', value: '90' },
+  { zh: '宏觀因子', en: 'Macro Factors', value: '15' },
+  { zh: '鏈上因子', en: 'On-Chain Factors', value: '17' },
+  { zh: '期權因子', en: 'Options Factors', value: '55' },
   { zh: '替代因子', en: 'Alt. Factors', value: '28' },
 ];
 
@@ -29,7 +29,7 @@ export default function ProductPage() {
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{t('product.title')}</h1>
         <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
           {i18n.language === 'zh'
-            ? '一个面向AI的加密市场数据世界模型基础设施'
+            ? '一個面向AI的加密市場數據世界模型基礎設施'
             : 'A cryptocurrency data world model infrastructure for AI-based market analysis'}
         </p>
       </section>

@@ -4,7 +4,7 @@ import ProtectedRoute from '../../components/admin/ProtectedRoute';
 import CrudTable from '../../components/admin/CrudTable';
 import { getAllPartners, createPartner, updatePartner, deletePartner } from '../../api/endpoints';
 
-const empty = { name_zh: '', name_en: '', logo_url: '', url: '', description_zh: '', description_en: '', sort_order: 0, is_active: 1 };
+const empty = { name_zh: '', name_en: '', name_ja: '', logo_url: '', url: '', description_zh: '', description_en: '', description_ja: '', sort_order: 0, is_active: 1 };
 
 function PartnersManagerContent() {
   const [items, setItems] = useState([]);
@@ -30,6 +30,7 @@ function PartnersManagerContent() {
           <div className="grid grid-cols-2 gap-4">
             <div><label className="block text-xs text-gray-500 mb-1">Name (ZH)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_zh} onChange={e => setEditItem({...editItem, name_zh: e.target.value})} required /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Name (EN)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_en} onChange={e => setEditItem({...editItem, name_en: e.target.value})} required /></div>
+            <div><label className="block text-xs text-gray-500 mb-1">Name (JA)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_ja || ''} onChange={e => setEditItem({...editItem, name_ja: e.target.value})} /></div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div><label className="block text-xs text-gray-500 mb-1">Logo URL</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.logo_url || ''} onChange={e => setEditItem({...editItem, logo_url: e.target.value})} /></div>
@@ -38,6 +39,7 @@ function PartnersManagerContent() {
           <div className="grid grid-cols-2 gap-4">
             <div><label className="block text-xs text-gray-500 mb-1">Description (ZH)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.description_zh || ''} onChange={e => setEditItem({...editItem, description_zh: e.target.value})} /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Description (EN)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.description_en || ''} onChange={e => setEditItem({...editItem, description_en: e.target.value})} /></div>
+            <div><label className="block text-xs text-gray-500 mb-1">Description (JA)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.description_ja || ''} onChange={e => setEditItem({...editItem, description_ja: e.target.value})} /></div>
           </div>
           <div className="flex gap-3">
             <button type="submit" className="px-4 py-2 bg-black text-white dark:bg-white dark:text-black text-sm rounded">Save</button>

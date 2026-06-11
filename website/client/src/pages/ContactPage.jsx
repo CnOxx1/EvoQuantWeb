@@ -37,7 +37,7 @@ export default function ContactPage() {
               onClick={() => setStatus('idle')}
               className="mt-6 text-sm text-[var(--text-muted)] hover:text-[var(--text-primary)] underline underline-offset-4"
             >
-              {i18n.language === 'zh' ? '发送另一条消息' : 'Send another message'}
+              {i18n.language === 'zh' ? '發送另一條消息' : 'Send another message'}
             </button>
           </div>
         ) : (

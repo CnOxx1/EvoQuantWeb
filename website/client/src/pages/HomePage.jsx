@@ -5,14 +5,14 @@ import ContentBlock from '../components/common/ContentBlock';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const evidenceBands = [
-  { key: 'microstructure', zh: '市场微观结构', en: 'Market Microstructure' },
-  { key: 'derivatives', zh: '衍生品拥挤度', en: 'Derivatives Structure' },
-  { key: 'cross_exchange', zh: '跨交易所执行', en: 'Cross-Exchange Execution' },
-  { key: 'onchain', zh: '链上资本流', en: 'On-Chain Capital Flow' },
-  { key: 'tokenomics', zh: '供给压力', en: 'Tokenomics Supply Pressure' },
-  { key: 'macro', zh: '宏观背景', en: 'Macro Regime' },
-  { key: 'news', zh: '新闻与事件', en: 'News & Events' },
-  { key: 'attention', zh: '注意力与开发者活跃度', en: 'Attention & Builder Activity' },
+  { key: 'microstructure', zh: '市場微觀結構', en: 'Market Microstructure' },
+  { key: 'derivatives', zh: '衍生品擁擠度', en: 'Derivatives Structure' },
+  { key: 'cross_exchange', zh: '跨交易所執行', en: 'Cross-Exchange Execution' },
+  { key: 'onchain', zh: '鏈上資本流', en: 'On-Chain Capital Flow' },
+  { key: 'tokenomics', zh: '供給壓力', en: 'Tokenomics Supply Pressure' },
+  { key: 'macro', zh: '宏觀背景', en: 'Macro Regime' },
+  { key: 'news', zh: '新聞與事件', en: 'News & Events' },
+  { key: 'attention', zh: '注意力與開發者活躍度', en: 'Attention & Builder Activity' },
 ];
 
 export default function HomePage() {

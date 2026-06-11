@@ -4,7 +4,7 @@ import ProtectedRoute from '../../components/admin/ProtectedRoute';
 import CrudTable from '../../components/admin/CrudTable';
 import { getAllFounders, createFounder, updateFounder, deleteFounder } from '../../api/endpoints';
 
-const empty = { name_zh: '', name_en: '', title_zh: '', title_en: '', bio_zh: '', bio_en: '', photo_url: '', email: '', social_links: '{}', sort_order: 0, is_active: 1 };
+const empty = { name_zh: '', name_en: '', name_ja: '', title_zh: '', title_en: '', title_ja: '', bio_zh: '', bio_en: '', bio_ja: '', photo_url: '', email: '', social_links: '{}', sort_order: 0, is_active: 1 };
 
 function FoundersManagerContent() {
   const [items, setItems] = useState([]);
@@ -30,11 +30,14 @@ function FoundersManagerContent() {
           <div className="grid grid-cols-2 gap-4">
             <div><label className="block text-xs text-gray-500 mb-1">Name (ZH)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_zh} onChange={e => setEditItem({...editItem, name_zh: e.target.value})} required /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Name (EN)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_en} onChange={e => setEditItem({...editItem, name_en: e.target.value})} required /></div>
+            <div><label className="block text-xs text-gray-500 mb-1">Name (JA)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.name_ja || ''} onChange={e => setEditItem({...editItem, name_ja: e.target.value})} /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Title (ZH)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.title_zh} onChange={e => setEditItem({...editItem, title_zh: e.target.value})} required /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Title (EN)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.title_en} onChange={e => setEditItem({...editItem, title_en: e.target.value})} required /></div>
+            <div><label className="block text-xs text-gray-500 mb-1">Title (JA)</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.title_ja || ''} onChange={e => setEditItem({...editItem, title_ja: e.target.value})} /></div>
           </div>
           <div><label className="block text-xs text-gray-500 mb-1">Bio (ZH)</label><textarea rows={3} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.bio_zh || ''} onChange={e => setEditItem({...editItem, bio_zh: e.target.value})} /></div>
           <div><label className="block text-xs text-gray-500 mb-1">Bio (EN)</label><textarea rows={3} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.bio_en || ''} onChange={e => setEditItem({...editItem, bio_en: e.target.value})} /></div>
+          <div><label className="block text-xs text-gray-500 mb-1">Bio (JA)</label><textarea rows={3} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.bio_ja || ''} onChange={e => setEditItem({...editItem, bio_ja: e.target.value})} /></div>
           <div className="grid grid-cols-2 gap-4">
             <div><label className="block text-xs text-gray-500 mb-1">Photo URL</label><input className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.photo_url || ''} onChange={e => setEditItem({...editItem, photo_url: e.target.value})} /></div>
             <div><label className="block text-xs text-gray-500 mb-1">Email</label><input type="email" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded text-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white" value={editItem.email || ''} onChange={e => setEditItem({...editItem, email: e.target.value})} /></div>

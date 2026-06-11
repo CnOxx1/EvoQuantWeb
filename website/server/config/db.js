@@ -128,6 +128,19 @@ function initSchema(db) {
     CREATE INDEX IF NOT EXISTS idx_translations_lang_key ON translations(lang, key);
     CREATE INDEX IF NOT EXISTS idx_login_attempts_ip ON login_attempts(ip_address, attempted_at);
   `);
+
+  // Add content_ja columns (safe to run on existing databases)
+  try { db.exec(`ALTER TABLE page_sections ADD COLUMN content_ja TEXT DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE pages ADD COLUMN title_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE pages ADD COLUMN meta_description_ja TEXT DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE friendly_links ADD COLUMN category_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE friendly_links ADD COLUMN title_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE friendly_links ADD COLUMN description_ja TEXT DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE founders ADD COLUMN name_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE founders ADD COLUMN title_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE founders ADD COLUMN bio_ja TEXT DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE partners ADD COLUMN name_ja TEXT NOT NULL DEFAULT ''`); } catch {}
+  try { db.exec(`ALTER TABLE partners ADD COLUMN description_ja TEXT DEFAULT ''`); } catch {}
 }
 
 module.exports = { getDb };

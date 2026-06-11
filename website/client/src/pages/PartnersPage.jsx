@@ -26,7 +26,7 @@ export default function PartnersPage() {
           <LoadingSpinner />
         ) : partners.length === 0 ? (
           <p className="text-center text-[var(--text-muted)] py-12">
-            {i18n.language === 'zh' ? '暂无合作伙伴' : 'No partners yet'}
+            {i18n.language === 'zh' ? '暫無合作夥伴' : 'No partners yet'}
           </p>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -56,7 +56,7 @@ export default function PartnersPage() {
                     rel="noopener noreferrer"
                     className="mt-3 text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] underline underline-offset-4"
                   >
-                    {i18n.language === 'zh' ? '访问网站' : 'Visit'}
+                    {i18n.language === 'zh' ? '訪問網站' : 'Visit'}
                   </a>
                 )}
               </div>

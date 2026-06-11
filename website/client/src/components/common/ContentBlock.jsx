@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { sanitize } from '../../utils/sanitize';
 
-export default function ContentBlock({ contentZh, contentEn, className = '' }) {
+export default function ContentBlock({ contentZh, contentEn, contentJa, className = '' }) {
   const { i18n } = useTranslation();
-  const html = i18n.language === 'zh' ? (contentZh || '') : (contentEn || contentZh || '');
+  const html = i18n.language === 'zh' ? (contentZh || '')
+    : i18n.language === 'ja' ? (contentJa || contentEn || contentZh || '')
+    : (contentEn || contentZh || '');
   return (
     <div
       className={`content-block max-w-none ${className}`}

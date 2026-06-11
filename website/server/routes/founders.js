@@ -19,21 +19,21 @@ router.get('/admin/all', auth, (req, res) => {
 
 // Admin: create founder
 router.post('/', auth, founderValidation, (req, res) => {
-  const { name_zh, name_en, title_zh, title_en, bio_zh, bio_en, photo_url, email, social_links, sort_order, is_active } = req.body;
+  const { name_zh, name_en, name_ja, title_zh, title_en, title_ja, bio_zh, bio_en, bio_ja, photo_url, email, social_links, sort_order, is_active } = req.body;
   const result = db.run(
-    `INSERT INTO founders (name_zh, name_en, title_zh, title_en, bio_zh, bio_en, photo_url, email, social_links, sort_order, is_active)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [name_zh, name_en, title_zh, title_en, bio_zh || '', bio_en || '', photo_url || '', email || '', social_links || '{}', sort_order || 0, is_active ?? 1]
+    `INSERT INTO founders (name_zh, name_en, name_ja, title_zh, title_en, title_ja, bio_zh, bio_en, bio_ja, photo_url, email, social_links, sort_order, is_active)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [name_zh, name_en, name_ja || '', title_zh, title_en, title_ja || '', bio_zh || '', bio_en || '', bio_ja || '', photo_url || '', email || '', social_links || '{}', sort_order || 0, is_active ?? 1]
   );
   res.status(201).json({ id: result.lastInsertRowid });
 });
 
 // Admin: update founder
 router.put('/:id', auth, founderValidation, (req, res) => {
-  const { name_zh, name_en, title_zh, title_en, bio_zh, bio_en, photo_url, email, social_links, sort_order, is_active } = req.body;
+  const { name_zh, name_en, name_ja, title_zh, title_en, title_ja, bio_zh, bio_en, bio_ja, photo_url, email, social_links, sort_order, is_active } = req.body;
   db.run(
-    `UPDATE founders SET name_zh=?, name_en=?, title_zh=?, title_en=?, bio_zh=?, bio_en=?, photo_url=?, email=?, social_links=?, sort_order=?, is_active=? WHERE id=?`,
-    [name_zh, name_en, title_zh, title_en, bio_zh || '', bio_en || '', photo_url || '', email || '', social_links || '{}', sort_order || 0, is_active ?? 1, req.params.id]
+    `UPDATE founders SET name_zh=?, name_en=?, name_ja=?, title_zh=?, title_en=?, title_ja=?, bio_zh=?, bio_en=?, bio_ja=?, photo_url=?, email=?, social_links=?, sort_order=?, is_active=? WHERE id=?`,
+    [name_zh, name_en, name_ja || '', title_zh, title_en, title_ja || '', bio_zh || '', bio_en || '', bio_ja || '', photo_url || '', email || '', social_links || '{}', sort_order || 0, is_active ?? 1, req.params.id]
   );
   res.json({ success: true });
 });

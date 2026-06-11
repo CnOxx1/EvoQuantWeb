@@ -1,48 +1,75 @@
 {
   "nav": {
-    "home": "首页",
-    "product": "产品介绍",
-    "links": "友情链接",
-    "contact": "联系我们",
-    "founder": "创始人简介",
-    "partners": "合作伙伴"
+    "home": "首頁",
+    "product": "產品介紹",
+    "download": "下載中心",
+    "links": "友情連結",
+    "contact": "聯繫我們",
+    "founder": "創始人簡介",
+    "partners": "合作夥伴"
   },
   "home": {
     "hero": {
-      "tagline": "从\"模型优先\"到\"世界模型优先\"",
-      "subtitle": "面向AI市场分析的加密货币数据世界模型基础设施",
+      "tagline": "從「模型優先」到「世界模型優先」",
+      "subtitle": "面向AI市場分析的加密貨幣數據世界模型基礎設施",
       "cta": "了解更多"
     },
+    "framework": {
+      "title": "從潛在市場狀態到AI可見世界",
+      "subtitle": "區塊鏈世界的視覺模型",
+      "description": "真實市場以潛在狀態存在——一個高維、非線性、部分可觀測的動態系統。通過數據表徵與特徵編碼，我們將其映射為可觀測世界。再經由AI語義壓縮與世界模型編碼，轉化為AI可見世界：一個服務於AI決策系統的市場認知層。",
+      "pillar1_title": "潛在市場狀態",
+      "pillar1_desc": "高維、非線性、部分可觀測的動態系統",
+      "pillar2_title": "可觀測世界",
+      "pillar2_desc": "數據表徵與特徵編碼",
+      "pillar3_title": "AI可見世界",
+      "pillar3_desc": "語義壓縮與世界模型編碼",
+      "pillar4_title": "市場認知層",
+      "pillar4_desc": "服務於AI決策系統的結構化情報",
+      "vision_title": "將複雜性視為視覺問題",
+      "vision_1": "市場微觀結構成像",
+      "vision_2": "鏈上數據可視化",
+      "vision_3": "跨交易所訂單簿成像",
+      "vision_4": "多維度特徵融合"
+    },
     "overview": {
-      "title": "核心命题",
-      "content": "多数AI交易系统失败，并非因为模型不够聪明，而是因为喂给模型的市场世界观过于单薄。evo quant 不直接替AI下单，而是先把真实市场编译成一个够宽、够稳、够诚实的世界模型。"
+      "title": "核心命題",
+      "content": "多數AI交易系統失敗，並非因為模型不夠聰明，而是因為餵給模型的市場世界觀過於單薄——僅依賴價格序列與技術指標的淺層表徵，無法捕捉市場的深層結構與多維信號。\n\nEvo-Quant 不直接使用AI下單。我們先將真實市場編譯成一個夠寬、夠穩、夠誠實的世界模型，透過八大證據帶的系統化數據採集與三層品質治理，將高維、非線性的潛在市場狀態逐步轉化為AI可消費的結構化情報。\n\n這不是又一個交易策略——這是為AI決策系統提供市場認知層的基礎設施。"
     },
     "evidence": {
-      "title": "八大证据带"
+      "title": "八大證據帶"
     }
   },
   "product": {
-    "title": "产品介绍",
-    "architecture": "系统架构",
-    "modules": "模块化观测系统",
-    "quality": "质量治理",
-    "specs": "技术规格"
+    "title": "產品介紹",
+    "architecture": "系統架構",
+    "modules": "模組化觀測系統",
+    "quality": "品質治理",
+    "specs": "技術規格"
+  },
+  "download": {
+    "title": "下載中心",
+    "subtitle": "產品文檔與白皮書",
+    "whitepaper": "產品白皮書",
+    "whitepaper_desc": "EvoQuant 世界模型基礎設施概覽——從潛在市場狀態到AI可見世界",
+    "size": "大小",
+    "download_btn": "下載 PDF"
   },
   "contact": {
-    "title": "联系我们",
+    "title": "聯繫我們",
     "form": {
       "name": "姓名",
-      "email": "邮箱",
+      "email": "郵箱",
       "company": "公司",
       "message": "留言",
-      "submit": "发送",
-      "sending": "发送中...",
-      "success": "消息已发送，感谢您的联系！",
-      "error": "发送失败，请稍后重试。"
+      "submit": "發送",
+      "sending": "發送中...",
+      "success": "消息已發送，感謝您的聯繫！",
+      "error": "發送失敗，請稍後重試。"
     }
   },
   "footer": {
-    "copyright": "© 2026 evo quant. 保留所有权利。"
+    "copyright": "© 2026 evo quant. 保留所有權利。"
   },
   "language": "English",
   "theme": {

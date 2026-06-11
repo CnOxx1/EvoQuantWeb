@@ -37,7 +37,7 @@ export default function FounderPage() {
           <LoadingSpinner />
         ) : founders.length === 0 ? (
           <p className="text-center text-[var(--text-muted)] py-12">
-            {i18n.language === 'zh' ? '暂无创始人信息' : 'No founder information yet'}
+            {i18n.language === 'zh' ? '暫無創始人信息' : 'No founder information yet'}
           </p>
         ) : (
           founders.map(founder => {
